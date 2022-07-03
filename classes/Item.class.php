@@ -36,11 +36,11 @@ class Item
             {
                 foreach ($item->children as $child)
                 {
-                    $item = self::FindItemByName($child, $name);
                     if ($item->itemName === $name)
                     {
                         break;
                     }
+                    $item = self::FindItemByName($child, $name);
                 }
             }
             return $item;

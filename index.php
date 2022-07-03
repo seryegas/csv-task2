@@ -16,7 +16,6 @@ $helpingArray = WorkWithCsvFile::FillHelpingArrayByElements($tree, $arrayO);
 $item = Item::FindItemByName($tree, 'Тележка Б25');
 WorkWithCsvFile::MakingTreeFullByAddingSubtreesOfRelationableElements($tree, $helpingArray);
 WorkWithCsvFile::RemoveSpareFields($tree);
-var_dump(json_encode($tree, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
 file_put_contents($outputPath, json_encode($tree->children, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
 
 
