@@ -19,12 +19,19 @@ class Item
         $this->trigger = 0;
     }
 
-    function AddChild(Item $child)
+    public function AddChild(Item $child): void 
     {
         $this->children[] = $child;
     }
 
-    public static function FindItemByName(Item $item, $name)
+    public function RemoveFields()
+    {
+        unset($this->trigger);
+        unset($this->relation);
+        unset($this->type);
+    }
+
+    public static function FindItemByName(Item $item, $name): Item
     {
         if ($item->itemName === $name)
         {

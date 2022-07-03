@@ -20,13 +20,18 @@ class WorkWithCsvFile
                     "relation" => $fileData[3],
                 ];
             }
+            unset($data[0]);
+            fclose($file);
         }
-        fclose($file);
+        else
+        {
+            print_r("Проблемы с размером файла\n");
+        }
         return $data;   
     }
 
     // нахождение возиожных продолжений для прямых компонентов
-    public static function FindNameOfRelationableElements($array, $type): array
+    public static function FindNameOfRelationableElements(array $array, string $type): array
     {
         $arrayWithNamesOfElements = [];
         foreach($array as $line)
@@ -37,10 +42,11 @@ class WorkWithCsvFile
             }
         }
         $arrayWithNamesOfElements = array_unique($arrayWithNamesOfElements);
+
         return $arrayWithNamesOfElements;
     }
 
-    public static function FillHelpingArrayByElements(Item $root, $helpingArray): array
+    public static function FillHelpingArrayByElements(Item $root, array $helpingArray): array
     {
         $newArray = [];
         foreach ($helpingArray as $name)
@@ -52,7 +58,7 @@ class WorkWithCsvFile
         return $newArray;
     }
 
-    public static function MakeStructureTreeFromArray($array): Item
+    public static function MakeStructureTreeFromArray(array $array): Item
     {
         $itemsList = new ItemsTree();
         $rootItem = $itemsList->rootItem;
@@ -72,7 +78,8 @@ class WorkWithCsvFile
         return $rootItem;
     }
 
-    public static function MakingTreeFullByAddingSubtreesOfRelationableElements(Item $item, $helpingArray): void
+    public static function MakingTreeFullByAddingSubtreesOfRelationableElements(Item $item, 
+        array $helpingArray): void
     {
         if ($item->type === "Прямые компоненты" && 
             count($helpingArray[$item->relation]->children) > 0 &&
@@ -95,9 +102,7 @@ class WorkWithCsvFile
     {
         if ($item != null)
         {
-            unset($item->trigger);
-            unset($item->relation);
-            unset($item->type);
+            $item->RemoveFields();
         }
         if (count($item->children) > 0)
         {
@@ -108,7 +113,7 @@ class WorkWithCsvFile
         }
     }
 
-    public static function ConvertDataFromLineToItem($line)
+    public static function ConvertDataFromLineToItem(array $line): Item
     {
         return new Item(
             $line['itemName'],
