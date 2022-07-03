@@ -14,7 +14,7 @@
     - git clone https://github.com/seryegas/csv-task2.git
     - cd csv-task2
 4. для запуска программы выполнить:
-    - php index.php input.csv output.json
+    - php index.php input.csv output1.json
 
 Примечания:
 - тесты до этого никогда не писал, получилось так
