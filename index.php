@@ -11,6 +11,7 @@ if (!empty($argv[1]) && !empty($argv[2]))
 {
     $inputPath = $argv[1];
     $outputPath = $argv[2];
+    
     $arrayData = WorkWithCsvFile::ConvertCsvDataToPhpArray($inputPath);
     $arrayWithHelpingData = WorkWithCsvFile::FindNameOfRelationableElements($arrayData, 'relation');
     $tree = WorkWithCsvFile::MakeStructureTreeFromArray($arrayData);
