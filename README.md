@@ -10,7 +10,7 @@
 2. установить php 
     - sudo apt-get install php7.1 php7.1-cli php7.1-json php7.1-fpm
 
-3. выполнить команду 
+3. выполнить команду в нужной директории
     - git clone https://github.com/seryegas/csv-task2.git
     - cd csv-task2
 4. для запуска программы выполнить:
