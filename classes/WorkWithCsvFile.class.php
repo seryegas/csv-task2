@@ -30,7 +30,7 @@ class WorkWithCsvFile
         return $data;   
     }
 
-    // нахождение возиожных продолжений для прямых компонентов
+    // нахождение возmожных продолжений для прямых компонентов
     public static function FindNameOfRelationableElements(array $array, string $type): array
     {
         $arrayWithNamesOfElements = [];
@@ -41,21 +41,21 @@ class WorkWithCsvFile
                 $arrayWithNamesOfElements[] = $line[$type];
             }
         }
-        $arrayWithNamesOfElements = array_unique($arrayWithNamesOfElements);
+        $arrayWithUniqueNamesOfElements = array_unique($arrayWithNamesOfElements);
 
-        return $arrayWithNamesOfElements;
+        return $arrayWithUniqueNamesOfElements;
     }
 
     public static function FillHelpingArrayByElements(Item $root, array $helpingArray): array
     {
-        $newArray = [];
+        $helpingArrayFilled = [];
         foreach ($helpingArray as $name)
         {
             $item = Item::FindItemByName($root, $name);
-            $newArray[$item->itemName] = $item;
+            $helpingArrayFilled[$item->itemName] = $item;
         }
         
-        return $newArray;
+        return $helpingArrayFilled;
     }
 
     public static function MakeStructureTreeFromArray(array $array): Item
@@ -124,5 +124,16 @@ class WorkWithCsvFile
         );
     }
 
-    
+    public static function GenerateJsonTreeFromCsvFile(string $inputPath, string $outputPath): void
+    {
+        $arrayData = self::ConvertCsvDataToPhpArray($inputPath);
+        $arrayWithHelpingData = self::FindNameOfRelationableElements($arrayData, 'relation');
+        $treeRoot = self::MakeStructureTreeFromArray($arrayData); 
+        $helpingArray = self::FillHelpingArrayByElements($treeRoot, $arrayWithHelpingData);
+        
+        self::MakingTreeFullByAddingSubtreesOfRelationableElements($treeRoot, $helpingArray);
+        self::RemoveSpareFields($treeRoot);
+        
+        file_put_contents($outputPath, json_encode($treeRoot->children, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+    }
 }
