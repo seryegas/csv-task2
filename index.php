@@ -1,25 +1,12 @@
 <?php
 
-require_once __DIR__ . '/classes/WorkWithCsvFile.class.php';
-require_once __DIR__ . '/classes/Item.class.php';
-require_once __DIR__ . '/classes/ItemsTree.class.php';
-require_once __DIR__ . '/tests/FileTesting.class.php';
+require_once __DIR__ . '/autoloader.php';
 
-
-
-if (!empty($argv[1]) && !empty($argv[2]))
-{
+if (!empty($argv[1]) && !empty($argv[2])) {
     $inputPath = $argv[1];
     $outputPath = $argv[2];
-    
-    FileTesting::StartAllTests();
-    WorkWithCsvFile::GenerateJsonTreeFromCsvFile($inputPath, $outputPath);
-}
-else
-{
+
+    (new CsvToJsonTreesConverter)->generateJsonTreeFromCsvFile($inputPath, $outputPath);
+} else {
     print_r("Не переданы аргументы\n");
 }
-
-
-
-

@@ -1,10 +1,8 @@
 <?php
 
-require_once __DIR__ . '/Item.class.php';
-
 class ItemsTree
 {
-    public $rootItem = null;
+    private $rootItem = null;
 
     function __construct()
     {
@@ -15,5 +13,10 @@ class ItemsTree
             null,
             []
         );
+    }
+
+    public function getRootItem()
+    {
+        return $this->rootItem;
     }
 }

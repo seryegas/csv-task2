@@ -1,11 +1,15 @@
 <?php
 
-require_once __DIR__ . '/../classes/WorkWithCsvFile.class.php';
-require_once __DIR__ . '/../classes/ItemsTree.class.php';
-require_once __DIR__ . '/../tests/FileTesting.class.php';
+namespace tests;
+
+use \classes\Item as Item;
+use \classes\ItemsTree as ItemsTree;
+use \classes\WorkWithCsvFile as WorkWithCsvFile;
 
 class FileTesting
 {
+    private $testable;
+
     private function CheckOpenFunction(): void
     {
         $array = [
@@ -14,7 +18,7 @@ class FileTesting
             3 => ["itemName" => "3", "type" => "Изделия и компоненты", "parent" => "1", "relation" => ""],
             4 => ["itemName" => "4", "type" => "Изделия и компоненты", "parent" => "1", "relation" => ""]
         ];
-        $arrayAfterFunction = WorkWithCsvFile::ConvertCsvDataToPhpArray('test.csv');
+        $arrayAfterFunction = $this->testable->convertCsvDataToPhpArray('test.csv');
 
         if ($array === $arrayAfterFunction)
         {
