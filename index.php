@@ -11,6 +11,7 @@ if (!empty($argv[1]) && !empty($argv[2])) {
 
     (new FileTesting)->startTests();
     (new CsvToJsonTreesConverter)->generateJsonTreeFromCsvFile($inputPath, $outputPath);
+    echo "Successfully completed!\n";
 } else {
-    print_r("Не переданы аргументы\n");
+    echo "No arguments put in function!\n";
 }

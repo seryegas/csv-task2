@@ -31,7 +31,7 @@ class CsvToJsonTreesConverter
             file_put_contents($outputPath, json_encode($this->treeRoot->getChildren(), 
                 JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
         } catch (Exception $e) {
-            echo 'Something went wrong';
+            echo 'Something went wrong: ' . $e->getMessage();
         }
         
     }
@@ -59,18 +59,18 @@ class CsvToJsonTreesConverter
 
     public function completeHelpingArray()
     {
-        $arrayWithHelpingData = $this->FindNameOfRelationableElements('relation');
+        $arrayWithHelpingData = $this->FindNameOfRelationableElements();
         $this->FillHelpingArrayByElements($arrayWithHelpingData);
     }
 
     // нахождение возmожных продолжений для прямых компонентов
-    public function findNameOfRelationableElements(string $type): array
+    public function findNameOfRelationableElements(): array
     {
         $arrayWithNamesOfElements = [];
 
         foreach ($this->csvData as $line) {
-            if (!empty($line[$type])) {
-                $arrayWithNamesOfElements[] = $line[$type];
+            if (!empty($line['relation'])) {
+                $arrayWithNamesOfElements[] = $line['relation'];
             }
         }
 
@@ -141,5 +141,20 @@ class CsvToJsonTreesConverter
             $line['relation'],
             []
         );
+    }
+
+    public function getCsvData()
+    {
+        return $this->csvData;
+    }
+
+    public function getTreeRoot()
+    {
+        return $this->treeRoot;
+    }
+
+    public function getHelpingArray()
+    {
+        return $this->helpingArray;
     }
 }

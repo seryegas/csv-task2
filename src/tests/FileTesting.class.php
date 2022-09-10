@@ -16,6 +16,7 @@ class FileTesting extends UnitTest
     public function startTests()
     {
         $this->testReadCsvFile();
+        $this->testFindNameOfRelationableElements();
         // self::CheckHelpingFunction();
         // self::CheckHelpingArrayWithElementsFunction();
         // self::CheckFillingTreeFromArrayFunction();
@@ -24,41 +25,19 @@ class FileTesting extends UnitTest
 
     private function testReadCsvFile(): void
     {
-        $array = [
-            1 => ["itemName" => "1", "type" => "Изделия и компоненты", "parent" => "", "relation" => ""],
-            2 => ["itemName" => "2", "type" => "Изделия и компоненты", "parent" => "1", "relation" => ""],
-            3 => ["itemName" => "3", "type" => "Изделия и компоненты", "parent" => "1", "relation" => ""],
-            4 => ["itemName" => "4", "type" => "Изделия и компоненты", "parent" => "1", "relation" => ""]
-        ];
-        $arrayAfterFunction = $this->testable->readCsvFile('test.csv');
-        var_dump($arrayAfterFunction);
-        $this->assertEquals($array, $arrayAfterFunction);
+        $array = $this->getCsvDataInPhpArray();
+        $this->testable->readCsvFile('test.csv');
+        $this->assertEquals($array, $this->testable->getCsvData());
     }
 
-    // private function CheckHelpingFunction(): void
-    // {
-    //     $arrayFilled = [
-    //         1 => ["itemName" => "1", "type" => "Изделия и компоненты", "parent" => "", "relation" => ""],
-    //         2 => ["itemName" => "4", "type" => "Прямые компоненты", "parent" => "1", "relation" => ""],
-    //         3 => ["itemName" => "3", "type" => "Изделия и компоненты", "parent" => "1", "relation" => "4"],
-    //         4 => ["itemName" => "4", "type" => "Изделия и компоненты", "parent" => "1", "relation" => "4"]
-    //     ];
+    private function testFindNameOfRelationableElements(): void
+    {
+        $array = ["4"];
+        $arrayAfterFunction = $this->testable->findNameOfRelationableElements();
+        $this->assertEquals($array, $arrayAfterFunction);       
+    }
 
-    //     $array = ["4"];
-
-    //     $type = 'relation';
-    //     $arrayAfterFunction = WorkWithCsvFile::FindNameOfRelationableElements($arrayFilled, $type);
-
-    //     if ($array === $arrayAfterFunction)
-    //     {
-    //         print_r("Выполнено успешно 2 тест\n");
-    //     }
-    //     else
-    //     {
-    //         print_r("Тест 2 провален\n");
-    //     }
-        
-    // }
+    
 
     // private function CheckHelpingArrayWithElementsFunction(): void
     // {
@@ -109,7 +88,7 @@ class FileTesting extends UnitTest
     //         print_r("Тест 4 провален\n");
     //     }
     // }
-
+   // 1 => ["itemName" => "1", "type" => "Изделия и компоненты", "parent" => "", "relation" => ""],
     // private function CheckMakingTreeFullByAddingSubtreesOfRelationableElementsFunction(): void
     // {
     //     $tree = new ItemsTree();
@@ -148,5 +127,13 @@ class FileTesting extends UnitTest
     //     }
     // }
 
-    // public function makePubli
+    public function getCsvDataInPhpArray()
+    {
+        return [
+            1 => ["itemName" => "1", "type" => "Изделия и компоненты", "parent" => "", "relation" => ""],
+            2 => ["itemName" => "2", "type" => "Изделия и компоненты", "parent" => "1", "relation" => ""],
+            3 => ["itemName" => "3", "type" => "Изделия и компоненты", "parent" => "1", "relation" => "4"],
+            4 => ["itemName" => "4", "type" => "Изделия и компоненты", "parent" => "1", "relation" => "4"]
+        ];
+    }
 }
