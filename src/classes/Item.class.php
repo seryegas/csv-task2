@@ -1,5 +1,7 @@
 <?php
 
+namespace classes;
+
 class Item implements \JsonSerializable
 {
     private $name;

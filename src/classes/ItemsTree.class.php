@@ -1,5 +1,8 @@
 <?php
 
+namespace classes;
+
+
 class ItemsTree
 {
     private $rootItem = null;
