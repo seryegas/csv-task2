@@ -13,7 +13,7 @@ class CsvToJsonTreesConverter
 
     public function __construct()
     {
-        $this->csvData= [];
+        $this->csvData = [];
         $this->treeRoot = (new ItemsTree)->getRootItem();
         $this->helpingArray = [];
     }
@@ -24,16 +24,17 @@ class CsvToJsonTreesConverter
             $this->readCsvFile($inputPath);
             $this->makeStructureTreeFromArray();
             $this->completeHelpingArray();
-    
+
             $this->MakingTreeFullByAddingSubtreesOfRelationableElements($this->treeRoot);
             $this->RemoveSpareFields($this->treeRoot);
 
-            file_put_contents($outputPath, json_encode($this->treeRoot->getChildren(), 
-                JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+            file_put_contents($outputPath, json_encode(
+                $this->treeRoot->getChildren(),
+                JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT
+            ));
         } catch (Exception $e) {
             echo 'Something went wrong: ' . $e->getMessage();
         }
-        
     }
 
     public function readCsvFile(string $inputPath): void
@@ -52,7 +53,7 @@ class CsvToJsonTreesConverter
             unset($data[0]);
             fclose($file);
         } else {
-            print_r("Проблемы с файлом\n");
+            echo "Problems with file!\n";
         }
         $this->csvData = $data;
     }

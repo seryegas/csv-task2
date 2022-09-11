@@ -9,7 +9,7 @@ class UnitTest
         if ($expected === $actual) {
             echo __FUNCTION__ . " successfully completed\n";
         } else {
-            echo __FUNCTION__ . "failed\n";
+            echo __FUNCTION__ . " failed\n";
         }
     }
 }
