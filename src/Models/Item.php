@@ -1,6 +1,6 @@
 <?php
 
-namespace classes;
+namespace Models;
 
 class Item implements \JsonSerializable
 {
@@ -26,19 +26,19 @@ class Item implements \JsonSerializable
         return get_object_vars($this);
     }
 
-    public function AddChild(Item $child): void 
+    public function addChild(Item $child): void 
     {
         $this->children[] = $child;
     }
 
-    public function RemoveFields()
+    public function removeFields()
     {
         unset($this->trigger);
         unset($this->relation);
         unset($this->type);
     }
 
-    public static function FindItemByName(Item $item, $name): Item
+    public function findItemByName(Item $item, $name): Item
     {
         if ($item->name === $name)
         {
@@ -54,7 +54,7 @@ class Item implements \JsonSerializable
                     {
                         break;
                     }
-                    $item = self::FindItemByName($child, $name);
+                    $item = $this->findItemByName($child, $name);
                 }
             }
             return $item;

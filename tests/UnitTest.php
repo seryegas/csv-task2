@@ -1,7 +1,5 @@
 <?php
 
-namespace tests;
-
 class UnitTest
 {
     protected function assertEquals($expected, $actual)
