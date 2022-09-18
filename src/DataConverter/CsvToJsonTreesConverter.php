@@ -71,13 +71,23 @@ class CsvToJsonTreesConverter
         }
     }
 
+    public function convertDataFromCsvLineToItem(array $line): Item
+    {
+        return new Item(
+            $line[ItemsConstants::ITEM_NAME],
+            $line[ItemsConstants::ITEM_TYPE],
+            $line[ItemsConstants::ITEM_PARENT],
+            $line[ItemsConstants::ITEM_RELATION]
+        );
+    }
+
     public function makingTreeFullByAddingSubtreesOfRelationableElements(Item $item): void
     {
         if (
             $item->getType() === ItemsConstants::STRAIGHT_COMPONENTS &&
             $item->getTrigger() === 0
             ) {
-            $this->fillStraightComponents($item);
+            $this->addSubtree($item);
         }
 
         if (count($item->getChildren()) > 0) {
@@ -87,7 +97,8 @@ class CsvToJsonTreesConverter
         }
     }
 
-    public function fillStraightComponents(Item $item) {
+    public function addSubtree(Item $item) 
+    {
         $childrensToAdd = $this->treeRoot->findItemByName($this->treeRoot, $item->getRelation())->getChildren();
         if ($childrensToAdd) {
             $childrensAllreadyExists = $item->getChildren();;
@@ -106,16 +117,6 @@ class CsvToJsonTreesConverter
                 $this->removeSpareFields($child);
             }
         }
-    }
-
-    public function convertDataFromCsvLineToItem(array $line): Item
-    {
-        return new Item(
-            $line[ItemsConstants::ITEM_NAME],
-            $line[ItemsConstants::ITEM_TYPE],
-            $line[ItemsConstants::ITEM_PARENT],
-            $line[ItemsConstants::ITEM_RELATION]
-        );
     }
 
     public function getCsvData()
